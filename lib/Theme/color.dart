@@ -12,3 +12,4 @@ const LinearGradient buttonColor = LinearGradient(colors: [
 
 const Color basecolor = Color(0xffffffff);
 const Color basecolor1 = Color(0xff000000);
+const Color basecolor2 = Color(0xffE3E3E3);

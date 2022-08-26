@@ -1,4 +1,5 @@
 import 'package:courseapp/Screen/Auth/login_screen.dart';
+import 'package:courseapp/Screen/Auth/login_signup_home_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Login(),
+      home: LoginSignupHome(),
     );
   }
 }
