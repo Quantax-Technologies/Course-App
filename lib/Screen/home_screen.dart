@@ -1,5 +1,6 @@
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Components/widgets.dart';
+import 'package:courseapp/Screen/courses_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
@@ -79,10 +80,63 @@ class Home extends StatelessWidget {
                   ],
                 ),
               ),
-              cardcourse(
-                context,
-                "How Black Hole Paradox Can Be Solved",
-              )
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Courses()));
+                      },
+                      child: cardcourse(
+                        context,
+                        "How Black Hole Paradox Can Be Solved",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Courses()));
+                      },
+                      child: cardcourse(
+                        context,
+                        "How Black Hole Paradox Can Be Solved",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Courses()));
+                      },
+                      child: cardcourse(
+                        context,
+                        "How Black Hole Paradox Can Be Solved",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Courses()));
+                      },
+                      child: cardcourse(
+                        context,
+                        "How Black Hole Paradox Can Be Solved",
+                      ),
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Navigator.of(context).push(
+                            MaterialPageRoute(builder: (context) => Courses()));
+                      },
+                      child: cardcourse(
+                        context,
+                        "How Black Hole Paradox Can Be Solved",
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ));
