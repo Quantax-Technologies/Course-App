@@ -1,5 +1,6 @@
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Components/widgets.dart';
+import 'package:courseapp/Screen/Auth/logout_screen.dart';
 import 'package:courseapp/Screen/courses_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:flutter/material.dart';
@@ -45,9 +46,15 @@ class Home extends StatelessWidget {
                     Container(
                       padding: EdgeInsets.only(top: 10),
                       child: Wrap(children: [
-                        cardlabel(
-                          context,
-                          "Psychology",
+                        InkWell(
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => Logout()));
+                          },
+                          child: cardlabel(
+                            context,
+                            "Psychology",
+                          ),
                         ),
                         cardlabel(
                           context,

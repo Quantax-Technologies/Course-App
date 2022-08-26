@@ -8,3 +8,4 @@ String linkedin = "assets/images/linkedin.png";
 String learner = "assets/images/learner.png";
 String expert = "assets/images/expert.png";
 String course = "assets/images/course.png";
+String profile = "assets/images/profile.png";

@@ -6,9 +6,12 @@ import 'package:flutter/material.dart';
 AppBar Appbarmain() {
   return AppBar(
     backgroundColor: basecolor,
-    leading: Icon(
-      Icons.menu,
-      color: basecolor1,
+    leading: InkWell(
+      onTap: () {},
+      child: Icon(
+        Icons.menu,
+        color: basecolor1,
+      ),
     ),
     title: Center(
       child: Image(

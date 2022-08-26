@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 const Color primary = Color(0xff2A319E);
 const Color primarycolor1 = Color(0xff2A319E);
 
-const LinearGradient buttonColor = LinearGradient(colors: [
-  Color(0xff28398F),
-  Color(0xff7DB0BC),
-  // Color(0xff44D258),
-  // Color(0xff44D258),
-]);
+const LinearGradient backgradColor = LinearGradient(
+  colors: [
+    Color(0xff28398F),
+    Color(0xff7DB0BC),
+    // Color(0xff44D258),
+    // Color(0xff44D258),
+  ],
+  begin: Alignment.topCenter,
+  end: Alignment.bottomCenter,
+);
 
 const Color basecolor = Color(0xffffffff);
 const Color basecolor1 = Color(0xff000000);
