@@ -12,7 +12,48 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Appbarmain(),
-      body: Container(),
+      body: Column(
+        children: [
+          Container(
+            margin: EdgeInsets.all(20),
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height * 0.3,
+            decoration: BoxDecoration(
+              image: DecorationImage(
+                  image: AssetImage(booktreepic),
+                  scale: 10,
+                  alignment: Alignment.bottomRight,
+                  fit: BoxFit.contain),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 180,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(primary: primary),
+                        onPressed: () {},
+                        child: Text("Login"))),
+                Container(
+                  width: 180,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: Colors.transparent,
+                        side: BorderSide(width: 5, color: primary),
+                      ),
+                      onPressed: () {},
+                      child: Text(
+                        "Signup",
+                        style: TextStyle(color: primary),
+                      )),
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
