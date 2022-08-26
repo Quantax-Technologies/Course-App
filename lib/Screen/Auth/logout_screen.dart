@@ -29,6 +29,14 @@ class Logout extends StatelessWidget {
               ),
             ),
             Positioned(
+                top: 30,
+                right: 20,
+                child: Icon(
+                  Icons.settings,
+                  color: basecolor,
+                  size: 35,
+                )),
+            Positioned(
                 bottom: 0,
                 left: 20,
                 child: Column(
