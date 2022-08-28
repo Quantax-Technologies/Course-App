@@ -13,7 +13,8 @@ class LoginSignupHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: Appbarmain(),
+      drawer: Drawer(),
+      appBar: Appbarmain(context),
       body: Column(
         children: [
           Container(

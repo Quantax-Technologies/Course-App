@@ -3,11 +3,13 @@ import 'package:courseapp/Theme/resources.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-AppBar Appbarmain() {
+AppBar Appbarmain(context) {
   return AppBar(
     backgroundColor: basecolor,
     leading: InkWell(
-      onTap: () {},
+      onTap: () {
+        Scaffold.of(context).openDrawer();
+      },
       child: Icon(
         Icons.menu,
         color: basecolor1,

@@ -13,7 +13,8 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: Appbarmain(),
+        drawer: Drawer(),
+        appBar: Appbarmain(context),
         body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
