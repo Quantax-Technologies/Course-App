@@ -1,4 +1,5 @@
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
 import 'package:flutter/material.dart';
@@ -25,6 +26,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawermain(context),
       appBar: Appbarmain(context),
       body: SingleChildScrollView(
         child: Column(

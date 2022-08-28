@@ -1,4 +1,5 @@
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Components/widgets.dart';
 import 'package:courseapp/Screen/Auth/logout_screen.dart';
 import 'package:courseapp/Screen/add_course.dart';
@@ -14,35 +15,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawer(
-          child: ListView(
-            padding: EdgeInsets.zero,
-            children: <Widget>[
-              DrawerHeader(
-                child: Text('Drawer Header'),
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-              ),
-              ListTile(
-                title: Text('Add Course'),
-                onTap: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => AddCourse()));
-                },
-              ),
-              ListTile(
-                title: Text('Profile'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => Logout()));
-                },
-              ),
-            ],
-          ),
-        ),
+        drawer: Drawermain(context),
         appBar: Appbarmain(context),
         body: SingleChildScrollView(
           child: Column(

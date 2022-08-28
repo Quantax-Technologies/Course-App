@@ -1,4 +1,5 @@
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Screen/Auth/login_signup_home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
@@ -25,6 +26,7 @@ class _LogoutState extends State<Logout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawermain(context),
       appBar: Appbarmain(context),
       body: Column(
         children: [

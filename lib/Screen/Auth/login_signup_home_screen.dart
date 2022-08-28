@@ -1,4 +1,5 @@
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Screen/Auth/Signup_screen.dart';
 import 'package:courseapp/Screen/Auth/login_screen.dart';
 import 'package:courseapp/Theme/color.dart';
@@ -13,7 +14,7 @@ class LoginSignupHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawermain2(context),
       appBar: Appbarmain(context),
       body: Column(
         children: [

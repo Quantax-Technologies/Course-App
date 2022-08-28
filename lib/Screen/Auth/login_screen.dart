@@ -1,4 +1,5 @@
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Components/widgets.dart';
 import 'package:courseapp/Screen/home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
@@ -44,7 +45,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawermain2(context),
       appBar: Appbarmain(context),
       body: SingleChildScrollView(
         child: Center(
