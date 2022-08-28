@@ -1,5 +1,6 @@
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Components/widgets.dart';
+import 'package:courseapp/Screen/Auth/login_screen.dart';
 import 'package:courseapp/Screen/home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
@@ -27,10 +28,20 @@ class _SignupState extends State<Signup> {
         email: emailAddress,
         password: password,
       );
+      signupemail.clear();
+      signuppassword.clear();
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => Login()));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('The password provided is too weak.'),
+        ));
         print('The password provided is too weak.');
       } else if (e.code == 'email-already-in-use') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('The account already exists for that email.'),
+        ));
         print('The account already exists for that email.');
       }
     } catch (e) {

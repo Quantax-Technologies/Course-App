@@ -26,8 +26,14 @@ class _LoginState extends State<Login> {
           .signInWithEmailAndPassword(email: emailAddress, password: password);
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('No user found for that email.'),
+        ));
         print('No user found for that email.');
       } else if (e.code == 'wrong-password') {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Wrong password provided for that user.'),
+        ));
         print('Wrong password provided for that user.');
       }
     }
