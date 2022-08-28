@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class AddCourse extends StatefulWidget {
   const AddCourse({Key? key}) : super(key: key);
@@ -13,6 +14,8 @@ class AddCourse extends StatefulWidget {
 }
 
 class _AddCourseState extends State<AddCourse> {
+    final _auth = FirebaseAuth.instance.currentUser!;
+
   addcoursefunction(
       titlecourse, urlcourse, durationcourse, descriptioncourse) {
           await FirebaseFirestore.instance
@@ -20,11 +23,13 @@ class _AddCourseState extends State<AddCourse> {
         // .doc(auth.currentUser!.uid)
         // .collection("usertask")
         .add({
-      'userid': "${auth.currentUser!.uid}",
+      'userid': "${_auth.uid}",
+      'useremail': "${_auth.email}",
       'coursetitle': "$titlecourse",
       'courseurl': urlcourse,
       'courseduration': durationcourse,
       'coursedescription':descriptioncourse,
+      'coursebanner':descriptioncourse,
       'datecreation':
           '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}}'
     });
