@@ -6,14 +6,19 @@ import 'package:flutter/material.dart';
 AppBar Appbarmain(context) {
   return AppBar(
     backgroundColor: basecolor,
-    leading: InkWell(
-      onTap: () {
-        Scaffold.of(context).openDrawer();
+    leading: Builder(
+      builder: (BuildContext context) {
+        return IconButton(
+          icon: const Icon(
+            Icons.menu,
+            color: basecolor1,
+          ),
+          onPressed: () {
+            Scaffold.of(context).openDrawer();
+          },
+          tooltip: MaterialLocalizations.of(context).openAppDrawerTooltip,
+        );
       },
-      child: Icon(
-        Icons.menu,
-        color: basecolor1,
-      ),
     ),
     title: Center(
       child: Image(

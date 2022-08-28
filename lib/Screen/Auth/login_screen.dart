@@ -44,6 +44,7 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(),
       appBar: Appbarmain(context),
       body: SingleChildScrollView(
         child: Center(
