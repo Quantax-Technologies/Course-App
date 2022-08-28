@@ -1,12 +1,26 @@
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Screen/Auth/login_signup_home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
-class Logout extends StatelessWidget {
+class Logout extends StatefulWidget {
   const Logout({Key? key}) : super(key: key);
+
+  @override
+  State<Logout> createState() => _LogoutState();
+}
+
+class _LogoutState extends State<Logout> {
+  logoutfunction() async {
+    await FirebaseAuth.instance.signOut();
+    Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => LoginSignupHome()),
+        (Route<dynamic> route) => false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,17 +72,22 @@ class Logout extends StatelessWidget {
                             color: basecolor3,
                             fontWeight: FontWeight.w900,
                             fontSize: 17)),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 15.0),
-                      child: Row(
-                        children: [
-                          Text("Logout",
-                              style: TextStyle(
-                                  color: basecolor1,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 20)),
-                          Icon(Icons.home_sharp),
-                        ],
+                    InkWell(
+                      onTap: () {
+                        logoutfunction();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Row(
+                          children: [
+                            Text("Logout",
+                                style: TextStyle(
+                                    color: basecolor1,
+                                    fontWeight: FontWeight.w600,
+                                    fontSize: 20)),
+                            Icon(Icons.home_sharp),
+                          ],
+                        ),
                       ),
                     )
                   ],
