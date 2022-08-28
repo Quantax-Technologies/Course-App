@@ -1,5 +1,6 @@
 import 'package:courseapp/Screen/Auth/logout_screen.dart';
 import 'package:courseapp/Screen/add_course.dart';
+import 'package:courseapp/Screen/about_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,7 +53,7 @@ Drawer Drawermain2(context) {
           title: Text('About'),
           onTap: () {
             Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => AddCourse()));
+                .push(MaterialPageRoute(builder: (context) => About()));
           },
         ),
       ],
