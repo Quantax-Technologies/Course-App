@@ -4,6 +4,7 @@ import 'package:courseapp/Screen/home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
 import 'package:courseapp/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,6 +20,23 @@ class _SignupState extends State<Signup> {
   var checkedValue = false;
   TextEditingController signupemail = TextEditingController();
   TextEditingController signuppassword = TextEditingController();
+  signupfunction(emailAddress, password) async {
+    try {
+      final credential =
+          await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailAddress,
+        password: password,
+      );
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        print('The password provided is too weak.');
+      } else if (e.code == 'email-already-in-use') {
+        print('The account already exists for that email.');
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,6 +64,7 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 TextField(
+                  controller: signupemail,
                   decoration: new InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -67,6 +86,7 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 TextField(
+                  controller: signuppassword,
                   decoration: new InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -155,8 +175,8 @@ class _SignupState extends State<Signup> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(primary: primary),
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Signup()));
+                                signupfunction(
+                                    signupemail.text, signuppassword.text);
                               },
                               child: Text("Signup"))),
                     ],

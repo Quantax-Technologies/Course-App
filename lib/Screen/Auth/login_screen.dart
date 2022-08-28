@@ -4,6 +4,7 @@ import 'package:courseapp/Screen/home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
 import 'package:courseapp/main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -19,6 +20,19 @@ class _LoginState extends State<Login> {
   var checkedValue = false;
   TextEditingController loginemail = TextEditingController();
   TextEditingController loginpassword = TextEditingController();
+  loginfunction(emailAddress, password) async {
+    try {
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: emailAddress, password: password);
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +59,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextField(
+                  controller: loginemail,
                   decoration: new InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -66,6 +81,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextField(
+                  controller: loginpassword,
                   decoration: new InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -154,8 +170,8 @@ class _LoginState extends State<Login> {
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(primary: primary),
                               onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Login()));
+                                loginfunction(
+                                    loginemail.text, loginpassword.text);
                               },
                               child: Text("Login"))),
                     ],
