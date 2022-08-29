@@ -16,6 +16,8 @@ class Logout extends StatefulWidget {
 }
 
 class _LogoutState extends State<Logout> {
+  final _auth = FirebaseAuth.instance.currentUser!;
+
   logoutfunction() async {
     await FirebaseAuth.instance.signOut();
     Navigator.of(context).pushAndRemoveUntil(
@@ -63,7 +65,7 @@ class _LogoutState extends State<Logout> {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Text("Monica H.",
+                      child: Text("${_auth.email}",
                           style: TextStyle(
                               color: basecolor1,
                               fontWeight: FontWeight.w900,

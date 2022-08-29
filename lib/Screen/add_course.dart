@@ -33,10 +33,7 @@ class _AddCourseState extends State<AddCourse> {
     var url = storageobj
         .uploadFile(pathname, '$ranfolder', filename)
         .then((value) async {
-      await FirebaseFirestore.instance.collection("Courses")
-          // .doc(auth.currentUser!.uid)
-          // .collection("usertask")
-          .add({
+      await FirebaseFirestore.instance.collection("Courses").add({
         'userid': "${_auth.uid}",
         'useremail': "${_auth.email}",
         'coursetitle': "$titlecourse",
