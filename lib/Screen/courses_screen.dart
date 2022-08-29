@@ -7,7 +7,17 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 
 class Courses extends StatefulWidget {
-  const Courses({Key? key}) : super(key: key);
+  final coursedescription;
+  final image;
+  final title;
+  final courseduration;
+  const Courses(
+      {Key? key,
+      @required this.image,
+      @required this.title,
+      @required this.courseduration,
+      @required this.coursedescription})
+      : super(key: key);
 
   @override
   State<Courses> createState() => _CoursesState();
@@ -54,7 +64,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(course),
+                      image: NetworkImage(widget.image),
                       scale: 10,
                       alignment: Alignment.bottomRight,
                       fit: BoxFit.cover),
@@ -87,7 +97,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                   Container(
                     width: MediaQuery.of(context).size.width * .8,
                     child: Text(
-                      "How Black Hole Paradox Can Be Solved",
+                      "${widget.title}",
                       style: TextStyle(
                           fontWeight: FontWeight.w900,
                           fontSize: 20,
@@ -121,7 +131,8 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Text(
-                        "Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced Advanced "),
+                      "${widget.coursedescription}",
+                    ),
                   )
                 ],
               ),

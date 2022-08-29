@@ -232,7 +232,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).push(
+                          Navigator.of(context).pushReplacement(
                               MaterialPageRoute(builder: (context) => Home()));
                         },
                         child: Text("Login"))),

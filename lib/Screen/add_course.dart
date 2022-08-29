@@ -30,20 +30,23 @@ class _AddCourseState extends State<AddCourse> {
     var pathname = results.files.single.path;
     var ranfolder = Random().nextInt(1000);
 
-    storageobj.uploadFile(pathname, '$ranfolder', filename);
-    await FirebaseFirestore.instance.collection("Courses")
-        // .doc(auth.currentUser!.uid)
-        // .collection("usertask")
-        .add({
-      'userid': "${_auth.uid}",
-      'useremail': "${_auth.email}",
-      'coursetitle': "$titlecourse",
-      'courseurl': urlcourse,
-      'courseduration': durationcourse,
-      'coursedescription': descriptioncourse,
-      'coursebanner': "coursepic/$ranfolder/" + results.files.single.name,
-      'datecreation':
-          '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}'
+    var url = storageobj
+        .uploadFile(pathname, '$ranfolder', filename)
+        .then((value) async {
+      await FirebaseFirestore.instance.collection("Courses")
+          // .doc(auth.currentUser!.uid)
+          // .collection("usertask")
+          .add({
+        'userid': "${_auth.uid}",
+        'useremail': "${_auth.email}",
+        'coursetitle': "$titlecourse",
+        'courseurl': urlcourse,
+        'courseduration': durationcourse,
+        'coursedescription': descriptioncourse,
+        'coursebanner': "$value",
+        'datecreation':
+            '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}'
+      });
     });
 
     titlecontroller.clear();

@@ -76,10 +76,7 @@ Widget cardlabel(
   );
 }
 
-Widget cardcourse(
-  context,
-  headingtext,
-) {
+Widget cardcourse(context, headingtext, courseperson, courseimage) {
   return Container(
     margin: EdgeInsets.only(left: 20),
     decoration: BoxDecoration(
@@ -105,7 +102,7 @@ Widget cardcourse(
                 topRight: Radius.circular(5), topLeft: Radius.circular(5)),
           ),
           child: Text(
-            "Bill Jones",
+            courseperson,
             style: TextStyle(
                 color: basecolor, fontWeight: FontWeight.w900, fontSize: 16),
           ),
@@ -117,7 +114,7 @@ Widget cardcourse(
               height: 150,
               decoration: BoxDecoration(
                 image: DecorationImage(
-                    image: AssetImage(course),
+                    image: NetworkImage(courseimage),
                     scale: 10,
                     alignment: Alignment.bottomRight,
                     fit: BoxFit.cover),
@@ -154,7 +151,7 @@ Widget cardcourse(
                 padding: EdgeInsets.only(top: 4, bottom: 4, right: 6, left: 6),
                 color: basecolor,
                 child: Text(
-                  "Bill Jones",
+                  courseperson,
                   style: TextStyle(
                       color: basecolor1,
                       fontWeight: FontWeight.w900,

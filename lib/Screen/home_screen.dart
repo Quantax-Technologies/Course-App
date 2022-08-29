@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Components/widgets.dart';
@@ -90,63 +91,101 @@ class Home extends StatelessWidget {
                   ],
                 ),
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Courses()));
-                      },
-                      child: cardcourse(
-                        context,
-                        "How Black Hole Paradox Can Be Solved",
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Courses()));
-                      },
-                      child: cardcourse(
-                        context,
-                        "How Black Hole Paradox Can Be Solved",
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Courses()));
-                      },
-                      child: cardcourse(
-                        context,
-                        "How Black Hole Paradox Can Be Solved",
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Courses()));
-                      },
-                      child: cardcourse(
-                        context,
-                        "How Black Hole Paradox Can Be Solved",
-                      ),
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Courses()));
-                      },
-                      child: cardcourse(
-                        context,
-                        "How Black Hole Paradox Can Be Solved",
-                      ),
-                    ),
-                  ],
-                ),
+              Container(
+                height: 300,
+                child: StreamBuilder<QuerySnapshot>(
+                    stream: FirebaseFirestore.instance
+                        .collection('Courses')
+                        .snapshots(),
+                    builder: (BuildContext context,
+                        AsyncSnapshot<QuerySnapshot> snapshot) {
+                      if (snapshot.hasError) {
+                        return Text("Error");
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(child: Text(""));
+                      }
+                      return ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: snapshot.data!.docs
+                            .map((DocumentSnapshot document) {
+                          Map<String, dynamic> data =
+                              document.data()! as Map<String, dynamic>;
+                          return InkWell(
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => Courses(
+                                      image: '${data['coursebanner']}',
+                                      title: '${data['coursetitle']}',
+                                      courseduration:
+                                          '${data['courseduration']}',
+                                      coursedescription:
+                                          '${data['coursedescription']}')));
+                            },
+                            child: cardcourse(context, "${data['coursetitle']}",
+                                'Bill', '${data['coursebanner']}'),
+                          );
+                        }).toList(),
+                      );
+                    }),
               ),
+              //   SingleChildScrollView(
+              //     scrollDirection: Axis.horizontal,
+              //     child: Row(
+              //       children: [
+              //         InkWell(
+              //           onTap: () {
+              //             Navigator.of(context).push(
+              //                 MaterialPageRoute(builder: (context) => Courses()));
+              //           },
+              //           child: cardcourse(
+              //             context,
+              //             "How Black Hole Paradox Can Be Solved",
+              //           ),
+              //         ),
+              //         InkWell(
+              //           onTap: () {
+              //             Navigator.of(context).push(
+              //                 MaterialPageRoute(builder: (context) => Courses()));
+              //           },
+              //           child: cardcourse(
+              //             context,
+              //             "How Black Hole Paradox Can Be Solved",
+              //           ),
+              //         ),
+              //         InkWell(
+              //           onTap: () {
+              //             Navigator.of(context).push(
+              //                 MaterialPageRoute(builder: (context) => Courses()));
+              //           },
+              //           child: cardcourse(
+              //             context,
+              //             "How Black Hole Paradox Can Be Solved",
+              //           ),
+              //         ),
+              //         InkWell(
+              //           onTap: () {
+              //             Navigator.of(context).push(
+              //                 MaterialPageRoute(builder: (context) => Courses()));
+              //           },
+              //           child: cardcourse(
+              //             context,
+              //             "How Black Hole Paradox Can Be Solved",
+              //           ),
+              //         ),
+              //         InkWell(
+              //           onTap: () {
+              //             Navigator.of(context).push(
+              //                 MaterialPageRoute(builder: (context) => Courses()));
+              //           },
+              //           child: cardcourse(
+              //             context,
+              //             "How Black Hole Paradox Can Be Solved",
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ),
             ],
           ),
         ));
