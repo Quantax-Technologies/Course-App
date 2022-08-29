@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Helper/storage_helper.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:file_picker/file_picker.dart';
 
 class AddCourse extends StatefulWidget {
   const AddCourse({Key? key}) : super(key: key);
@@ -15,12 +19,16 @@ class AddCourse extends StatefulWidget {
 }
 
 class _AddCourseState extends State<AddCourse> {
-    final _auth = FirebaseAuth.instance.currentUser!;
+  final _auth = FirebaseAuth.instance.currentUser!;
 
   addcoursefunction(
-      titlecourse, urlcourse, durationcourse, descriptioncourse) {
-          await FirebaseFirestore.instance
-        .collection("Courses")
+      titlecourse, urlcourse, durationcourse, descriptioncourse) async {
+    var folder = '{S${_auth.email}}';
+    Storage storageobj = Storage();
+    var filename = results.files.single.name;
+    var pathname = results.files.single.path;
+    storageobj.uploadFile(pathname, folder, filename);
+    await FirebaseFirestore.instance.collection("Courses")
         // .doc(auth.currentUser!.uid)
         // .collection("usertask")
         .add({
@@ -29,21 +37,24 @@ class _AddCourseState extends State<AddCourse> {
       'coursetitle': "$titlecourse",
       'courseurl': urlcourse,
       'courseduration': durationcourse,
-      'coursedescription':descriptioncourse,
-      'coursebanner':descriptioncourse,
+      'coursedescription': descriptioncourse,
+      'coursebanner': "profile/" + folder + "/" + results.files.single.name,
       'datecreation':
-          '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}}'
+          '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}'
     });
     titlecontroller.clear();
     urlcontroller.clear();
     durationcontroller.clear();
     descriptioncontroller.clear();
-      }
+  }
+
   @override
   TextEditingController titlecontroller = TextEditingController();
   TextEditingController urlcontroller = TextEditingController();
   TextEditingController durationcontroller = TextEditingController();
   TextEditingController descriptioncontroller = TextEditingController();
+  var results;
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Appbarmain(context),
@@ -159,6 +170,42 @@ class _AddCourseState extends State<AddCourse> {
                   onPressed: () {},
                   child: Text("Choose Banner"),
                 ),
+                Stack(alignment: Alignment.bottomRight, children: [
+                  if (results != null)
+                    CircleAvatar(
+                      radius: MediaQuery.of(context).size.width * 0.12,
+                      backgroundImage: FileImage(
+                        File(results.files.single.path),
+                      ),
+                    ),
+                  InkWell(
+                    onTap: () async {
+                      results = await FilePicker.platform.pickFiles(
+                          type: FileType.custom,
+                          allowMultiple: false,
+                          allowedExtensions: ['pdf', 'jpg', 'png', 'jpeg']);
+                      setState(() {
+                        results = results;
+                      });
+                      if (results == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text("content"),
+                          ),
+                        );
+                      }
+                      var pathname = results.files.single.path;
+                    },
+                    child: CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.white,
+                      child: Icon(
+                        Icons.add,
+                        color: Colors.purple,
+                      ),
+                    ),
+                  ),
+                ]),
                 Container(
                     width: MediaQuery.of(context).size.width,
                     child: ElevatedButton(
