@@ -2,6 +2,7 @@ import 'dart:io';
 import 'dart:math';
 
 import 'package:courseapp/Components/appbar.dart';
+import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Helper/storage_helper.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:flutter/material.dart';
@@ -61,6 +62,7 @@ class _AddCourseState extends State<AddCourse> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawermain(context),
       appBar: Appbarmain(context),
       body: SingleChildScrollView(
         child: Center(
