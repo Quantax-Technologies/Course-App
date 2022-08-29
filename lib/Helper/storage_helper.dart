@@ -7,7 +7,7 @@ class Storage {
       String filepath, String folder, String filename) async {
     File file = File(filepath);
     try {
-      await storage.ref('profile/$folder/$filename').putFile(file);
+      await storage.ref().child('coursepic/$folder/$filename').putFile(file);
     } on FirebaseException catch (e) {
       print(e);
     }

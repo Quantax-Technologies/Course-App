@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:math';
 
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Helper/storage_helper.dart';
@@ -23,11 +24,13 @@ class _AddCourseState extends State<AddCourse> {
 
   addcoursefunction(
       titlecourse, urlcourse, durationcourse, descriptioncourse) async {
-    var folder = '{S${_auth.email}}';
+    var folder = 'profile';
     Storage storageobj = Storage();
     var filename = results.files.single.name;
     var pathname = results.files.single.path;
-    storageobj.uploadFile(pathname, folder, filename);
+    var ranfolder = Random().nextInt(1000);
+
+    storageobj.uploadFile(pathname, '$ranfolder', filename);
     await FirebaseFirestore.instance.collection("Courses")
         // .doc(auth.currentUser!.uid)
         // .collection("usertask")
@@ -38,10 +41,11 @@ class _AddCourseState extends State<AddCourse> {
       'courseurl': urlcourse,
       'courseduration': durationcourse,
       'coursedescription': descriptioncourse,
-      'coursebanner': "profile/" + folder + "/" + results.files.single.name,
+      'coursebanner': "coursepic/$ranfolder/" + results.files.single.name,
       'datecreation':
           '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}'
     });
+
     titlecontroller.clear();
     urlcontroller.clear();
     durationcontroller.clear();
@@ -166,18 +170,36 @@ class _AddCourseState extends State<AddCourse> {
                         borderSide: BorderSide(color: basecolor2)),
                   ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: Text("Choose Banner"),
+                SizedBox(
+                  height: 10,
                 ),
-                Stack(alignment: Alignment.bottomRight, children: [
-                  if (results != null)
-                    CircleAvatar(
-                      radius: MediaQuery.of(context).size.width * 0.12,
-                      backgroundImage: FileImage(
-                        File(results.files.single.path),
-                      ),
+                Stack(alignment: Alignment.center, children: [
+                  if (results == null)
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 100,
+                      decoration: BoxDecoration(color: primary),
+                      child: Center(
+                          child: Padding(
+                        padding: const EdgeInsets.only(bottom: 58.0),
+                        child: Text(
+                          "Add Cover",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      )),
                     ),
+                  if (results != null)
+                    Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: FileImage(
+                              File(results.files.single.path),
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                        )),
                   InkWell(
                     onTap: () async {
                       results = await FilePicker.platform.pickFiles(
