@@ -115,12 +115,14 @@ class Home extends StatelessWidget {
                             onTap: () {
                               Navigator.of(context).push(MaterialPageRoute(
                                   builder: (context) => Courses(
-                                      image: '${data['coursebanner']}',
-                                      title: '${data['coursetitle']}',
-                                      courseduration:
-                                          '${data['courseduration']}',
-                                      coursedescription:
-                                          '${data['coursedescription']}')));
+                                        image: '${data['coursebanner']}',
+                                        title: '${data['coursetitle']}',
+                                        courseduration:
+                                            '${data['courseduration']}',
+                                        coursedescription:
+                                            '${data['coursedescription']}',
+                                        courseurl: '${data['courseurl']}',
+                                      )));
                             },
                             child: cardcourse(context, "${data['coursetitle']}",
                                 'Bill', '${data['coursebanner']}'),

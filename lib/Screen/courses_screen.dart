@@ -11,12 +11,14 @@ class Courses extends StatefulWidget {
   final image;
   final title;
   final courseduration;
+  final courseurl;
   const Courses(
       {Key? key,
       @required this.image,
       @required this.title,
       @required this.courseduration,
-      @required this.coursedescription})
+      @required this.coursedescription,
+      @required this.courseurl})
       : super(key: key);
 
   @override
@@ -111,6 +113,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
             Container(
               padding: EdgeInsets.only(top: 0, left: 15, right: 15, bottom: 30),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -131,7 +134,13 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Text(
-                      "${widget.coursedescription}",
+                      "Course Url : ${widget.coursedescription}",
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 20.0),
+                    child: Text(
+                      "${widget.courseurl}",
                     ),
                   )
                 ],
@@ -139,7 +148,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
             ),
             TabBar(
               unselectedLabelColor: Colors.black,
-              labelColor: basecolor,
+              labelColor: primary,
               tabs: [
                 Tab(
                   text: 'Bundle',
@@ -159,7 +168,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                   Container(
                       child: Column(
                     children: [
-                      ExpansionTile(title: Text("a"), children: [
+                      ExpansionTile(title: Text("Question 1"), children: [
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                         Text(
@@ -173,7 +182,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                       ]),
-                      ExpansionTile(title: Text("a"), children: [
+                      ExpansionTile(title: Text("Question 2"), children: [
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                         Text(
@@ -187,7 +196,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                       ]),
-                      ExpansionTile(title: Text("a"), children: [
+                      ExpansionTile(title: Text("Question 3"), children: [
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                         Text(
@@ -201,7 +210,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                       ]),
-                      ExpansionTile(title: Text("a"), children: [
+                      ExpansionTile(title: Text("Question 4"), children: [
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                         Text(
@@ -215,7 +224,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                       ]),
-                      ExpansionTile(title: Text("Question"), children: [
+                      ExpansionTile(title: Text("Question 5"), children: [
                         Text(
                             "lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                         Text(
@@ -232,7 +241,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                     ],
                   )),
                   Container(
-                    child: ExpansionTile(title: Text("Question"), children: [
+                    child: ExpansionTile(title: Text("Question 1"), children: [
                       Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                       Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
                       Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
