@@ -65,7 +65,7 @@ class _AddCourseState extends State<AddCourse> {
       durationcontroller.clear();
       descriptioncontroller.clear();
       ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('Upload image')));
+          .showSnackBar(SnackBar(content: Text('Course Upload')));
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
     }

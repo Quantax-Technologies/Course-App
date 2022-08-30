@@ -23,30 +23,36 @@ class _SignupState extends State<Signup> {
   TextEditingController signupemail = TextEditingController();
   TextEditingController signuppassword = TextEditingController();
   signupfunction(emailAddress, password) async {
-    try {
-      final credential =
-          await FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: emailAddress,
-        password: password,
-      );
-      signupemail.clear();
-      signuppassword.clear();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => Login()));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'weak-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('The password provided is too weak.'),
-        ));
-        print('The password provided is too weak.');
-      } else if (e.code == 'email-already-in-use') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('The account already exists for that email.'),
-        ));
-        print('The account already exists for that email.');
+    if (emailAddress == '' || password == '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Fill The fields'),
+      ));
+    } else {
+      try {
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailAddress,
+          password: password,
+        );
+        signupemail.clear();
+        signuppassword.clear();
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => Login()));
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('The password provided is too weak.'),
+          ));
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('The account already exists for that email.'),
+          ));
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
       }
-    } catch (e) {
-      print(e);
     }
   }
 

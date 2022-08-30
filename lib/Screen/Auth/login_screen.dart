@@ -27,26 +27,28 @@ class _LoginState extends State<Login> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Fill The fields'),
       ));
-    }
-    try {
-      final credential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: emailAddress, password: password);
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('Logged In'),
-      ));
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
+    } else {
+      try {
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: emailAddress, password: password);
+        Navigator.of(context)
+            .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('No user found for that email.'),
+          content: Text('Logged In'),
         ));
-        print('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Wrong password provided for that user.'),
-        ));
-        print('Wrong password provided for that user.');
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('No user found for that email.'),
+          ));
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text('Wrong password provided for that user.'),
+          ));
+          print('Wrong password provided for that user.');
+        }
       }
     }
   }
@@ -266,8 +268,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(builder: (context) => Home()));
+                          loginfunction(loginemail.text, loginpassword.text);
                         },
                         child: Text("Login"))),
               ],
