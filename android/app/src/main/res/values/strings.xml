@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="facebook_app_id">1234440290680428</string>
+    <string name="facebook_client_token">412262e9dd565ef852bf7289c2b9f5b8</string>
+    <string name="app_name">Course App</string>
+</resources>
