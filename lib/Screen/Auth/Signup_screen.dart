@@ -39,6 +39,9 @@ class _SignupState extends State<Signup> {
         );
         signupemail.clear();
         signuppassword.clear();
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text('Account Created'),
+        ));
         Navigator.of(context)
             .push(MaterialPageRoute(builder: (context) => Login()));
       } on FirebaseAuthException catch (e) {
