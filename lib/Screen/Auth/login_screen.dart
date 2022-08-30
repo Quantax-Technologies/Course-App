@@ -23,11 +23,19 @@ class _LoginState extends State<Login> {
   TextEditingController loginemail = TextEditingController();
   TextEditingController loginpassword = TextEditingController();
   loginfunction(emailAddress, password) async {
+    if (emailAddress == '' || password == '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Fill The fields'),
+      ));
+    }
     try {
       final credential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: emailAddress, password: password);
       Navigator.of(context)
           .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Logged In'),
+      ));
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(

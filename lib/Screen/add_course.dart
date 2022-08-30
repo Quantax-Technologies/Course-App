@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Helper/storage_helper.dart';
+import 'package:courseapp/Screen/home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -25,32 +26,49 @@ class _AddCourseState extends State<AddCourse> {
 
   addcoursefunction(
       titlecourse, urlcourse, durationcourse, descriptioncourse) async {
-    var folder = 'profile';
-    Storage storageobj = Storage();
-    var filename = results.files.single.name;
-    var pathname = results.files.single.path;
-    var ranfolder = Random().nextInt(1000);
+    if (titlecourse == '' ||
+        urlcourse == '' ||
+        durationcourse == '' ||
+        descriptioncourse == '') {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Fill The fields'),
+      ));
+    } else if (results == '' || results == null) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text('Upload image'),
+      ));
+    } else {
+      var folder = 'profile';
+      Storage storageobj = Storage();
+      var filename = results.files.single.name;
+      var pathname = results.files.single.path;
+      var ranfolder = Random().nextInt(1000);
 
-    var url = storageobj
-        .uploadFile(pathname, '$ranfolder', filename)
-        .then((value) async {
-      await FirebaseFirestore.instance.collection("Courses").add({
-        'userid': "${_auth.uid}",
-        'useremail': "${_auth.email}",
-        'coursetitle': "$titlecourse",
-        'courseurl': urlcourse,
-        'courseduration': durationcourse,
-        'coursedescription': descriptioncourse,
-        'coursebanner': "$value",
-        'datecreation':
-            '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}'
+      var url = storageobj
+          .uploadFile(pathname, '$ranfolder', filename)
+          .then((value) async {
+        await FirebaseFirestore.instance.collection("Courses").add({
+          'userid': "${_auth.uid}",
+          'useremail': "${_auth.email}",
+          'coursetitle': "$titlecourse",
+          'courseurl': urlcourse,
+          'courseduration': durationcourse,
+          'coursedescription': descriptioncourse,
+          'coursebanner': "$value",
+          'datecreation':
+              '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}'
+        });
       });
-    });
 
-    titlecontroller.clear();
-    urlcontroller.clear();
-    durationcontroller.clear();
-    descriptioncontroller.clear();
+      titlecontroller.clear();
+      urlcontroller.clear();
+      durationcontroller.clear();
+      descriptioncontroller.clear();
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Upload image')));
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+    }
   }
 
   @override
