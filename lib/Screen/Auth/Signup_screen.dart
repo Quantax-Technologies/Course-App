@@ -1,6 +1,7 @@
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Components/drawer.dart';
 import 'package:courseapp/Components/widgets.dart';
+import 'package:courseapp/Helper/facebook_google_login.dart';
 import 'package:courseapp/Screen/Auth/login_screen.dart';
 import 'package:courseapp/Screen/home_screen.dart';
 import 'package:courseapp/Theme/color.dart';
@@ -56,40 +57,6 @@ class _SignupState extends State<Signup> {
         print(e);
       }
     }
-  }
-
-  Future<UserCredential> signInWithGoogle() async {
-    // Trigger the authentication flow
-    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-
-    // Obtain the auth details from the request
-    final GoogleSignInAuthentication? googleAuth =
-        await googleUser?.authentication;
-
-    // Create a new credential
-    final credential = GoogleAuthProvider.credential(
-      accessToken: googleAuth?.accessToken,
-      idToken: googleAuth?.idToken,
-    );
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
-
-    // Once signed in, return the UserCredential
-    return await FirebaseAuth.instance.signInWithCredential(credential);
-  }
-
-  Future<UserCredential> signInWithFacebook() async {
-    // Trigger the sign-in flow
-    final LoginResult loginResult = await FacebookAuth.instance.login();
-
-    // Create a credential from the access token
-    final OAuthCredential facebookAuthCredential =
-        FacebookAuthProvider.credential(loginResult.accessToken!.token);
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
-
-    // Once signed in, return the UserCredential
-    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
   }
 
   bool _isObscure = true;
@@ -216,7 +183,7 @@ class _SignupState extends State<Signup> {
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    signInWithGoogle();
+                                    signInWithGoogle(context);
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 20),
@@ -229,7 +196,7 @@ class _SignupState extends State<Signup> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    signInWithFacebook();
+                                    signInWithFacebook(context);
                                   },
                                   child: Padding(
                                     padding: EdgeInsets.only(right: 20),
