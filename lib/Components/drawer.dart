@@ -19,6 +19,7 @@ Drawer Drawermain(context) {
           ),
         ),
         ListTile(
+          leading: Icon(Icons.home),
           title: Text('Home'),
           onTap: () {
             Navigator.of(context)
@@ -26,6 +27,7 @@ Drawer Drawermain(context) {
           },
         ),
         ListTile(
+          leading: Icon(Icons.bookmark),
           title: Text('Add Course'),
           onTap: () {
             Navigator.of(context)
@@ -33,6 +35,7 @@ Drawer Drawermain(context) {
           },
         ),
         ListTile(
+          leading: Icon(Icons.person),
           title: Text('Profile'),
           onTap: () {
             // Update the state of the app.
@@ -58,10 +61,10 @@ Drawer Drawermain2(context) {
           ),
         ),
         ListTile(
-          title: Text('About'),
+          title: Text('Login'),
           onTap: () {
-            Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => Login()));
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Login()));
           },
         ),
       ],
