@@ -134,13 +134,13 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Text(
-                      "Course Url : ${widget.coursedescription}",
+                      "${widget.coursedescription}",
                     ),
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 20.0),
                     child: Text(
-                      "${widget.courseurl}",
+                      "Course Url : ${widget.courseurl}",
                     ),
                   )
                 ],
