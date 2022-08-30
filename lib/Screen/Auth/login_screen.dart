@@ -10,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -73,6 +74,22 @@ class _LoginState extends State<Login> {
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
+
+  bool _isObscure = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,8 +139,20 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 TextField(
+                  obscureText: _isObscure,
                   controller: loginpassword,
                   decoration: new InputDecoration(
+                    suffixIcon: IconButton(
+                        icon: Icon(
+                            _isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: primary),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        }),
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
                         borderSide: BorderSide(color: basecolor1)),
@@ -194,12 +223,17 @@ class _LoginState extends State<Login> {
                                     ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 20),
-                                  child: Image(
-                                      height: 60,
-                                      image: AssetImage(fb),
-                                      fit: BoxFit.fill),
+                                InkWell(
+                                  onTap: () {
+                                    signInWithFacebook();
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 20),
+                                    child: Image(
+                                        height: 60,
+                                        image: AssetImage(fb),
+                                        fit: BoxFit.fill),
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(right: 20),

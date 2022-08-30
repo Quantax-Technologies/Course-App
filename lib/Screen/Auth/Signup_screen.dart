@@ -10,6 +10,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class Signup extends StatefulWidget {
   const Signup({Key? key}) : super(key: key);
@@ -55,6 +57,42 @@ class _SignupState extends State<Signup> {
       }
     }
   }
+
+  Future<UserCredential> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+
+    // Once signed in, return the UserCredential
+    return await FirebaseAuth.instance.signInWithCredential(credential);
+  }
+
+  Future<UserCredential> signInWithFacebook() async {
+    // Trigger the sign-in flow
+    final LoginResult loginResult = await FacebookAuth.instance.login();
+
+    // Create a credential from the access token
+    final OAuthCredential facebookAuthCredential =
+        FacebookAuthProvider.credential(loginResult.accessToken!.token);
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+
+    // Once signed in, return the UserCredential
+    return FirebaseAuth.instance.signInWithCredential(facebookAuthCredential);
+  }
+
+  bool _isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -105,8 +143,20 @@ class _SignupState extends State<Signup> {
                   ),
                 ),
                 TextField(
+                  obscureText: _isObscure,
                   controller: signuppassword,
                   decoration: new InputDecoration(
+                    suffixIcon: IconButton(
+                        icon: Icon(
+                            _isObscure
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: primary),
+                        onPressed: () {
+                          setState(() {
+                            _isObscure = !_isObscure;
+                          });
+                        }),
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
                         borderSide: BorderSide(color: basecolor1)),
@@ -164,20 +214,30 @@ class _SignupState extends State<Signup> {
                             Text("Continue with"),
                             Row(
                               children: [
-                                Padding(
-                                  padding: EdgeInsets.only(right: 20),
-                                  child: Image(
-                                    image: AssetImage(google),
-                                    fit: BoxFit.fill,
-                                    height: 40,
+                                InkWell(
+                                  onTap: () {
+                                    signInWithGoogle();
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 20),
+                                    child: Image(
+                                      image: AssetImage(google),
+                                      fit: BoxFit.fill,
+                                      height: 40,
+                                    ),
                                   ),
                                 ),
-                                Padding(
-                                  padding: EdgeInsets.only(right: 20),
-                                  child: Image(
-                                      height: 60,
-                                      image: AssetImage(fb),
-                                      fit: BoxFit.fill),
+                                InkWell(
+                                  onTap: () {
+                                    signInWithFacebook();
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.only(right: 20),
+                                    child: Image(
+                                        height: 60,
+                                        image: AssetImage(fb),
+                                        fit: BoxFit.fill),
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.only(right: 20),
