@@ -131,63 +131,6 @@ class Home extends StatelessWidget {
                       );
                     }),
               ),
-              //   SingleChildScrollView(
-              //     scrollDirection: Axis.horizontal,
-              //     child: Row(
-              //       children: [
-              //         InkWell(
-              //           onTap: () {
-              //             Navigator.of(context).push(
-              //                 MaterialPageRoute(builder: (context) => Courses()));
-              //           },
-              //           child: cardcourse(
-              //             context,
-              //             "How Black Hole Paradox Can Be Solved",
-              //           ),
-              //         ),
-              //         InkWell(
-              //           onTap: () {
-              //             Navigator.of(context).push(
-              //                 MaterialPageRoute(builder: (context) => Courses()));
-              //           },
-              //           child: cardcourse(
-              //             context,
-              //             "How Black Hole Paradox Can Be Solved",
-              //           ),
-              //         ),
-              //         InkWell(
-              //           onTap: () {
-              //             Navigator.of(context).push(
-              //                 MaterialPageRoute(builder: (context) => Courses()));
-              //           },
-              //           child: cardcourse(
-              //             context,
-              //             "How Black Hole Paradox Can Be Solved",
-              //           ),
-              //         ),
-              //         InkWell(
-              //           onTap: () {
-              //             Navigator.of(context).push(
-              //                 MaterialPageRoute(builder: (context) => Courses()));
-              //           },
-              //           child: cardcourse(
-              //             context,
-              //             "How Black Hole Paradox Can Be Solved",
-              //           ),
-              //         ),
-              //         InkWell(
-              //           onTap: () {
-              //             Navigator.of(context).push(
-              //                 MaterialPageRoute(builder: (context) => Courses()));
-              //           },
-              //           child: cardcourse(
-              //             context,
-              //             "How Black Hole Paradox Can Be Solved",
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
             ],
           ),
         ));
