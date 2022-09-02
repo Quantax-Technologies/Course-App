@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        drawer: Drawermain(context),
+        drawer: Drawer(child: DrawerClass()),
         appBar: Appbarmain(context),
         body: SingleChildScrollView(
           child: Column(

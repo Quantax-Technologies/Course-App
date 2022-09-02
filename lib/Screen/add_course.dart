@@ -80,7 +80,7 @@ class _AddCourseState extends State<AddCourse> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawermain(context),
+      drawer: Drawer(child: DrawerClass()),
       appBar: Appbarmain(context),
       body: SingleChildScrollView(
         child: Center(

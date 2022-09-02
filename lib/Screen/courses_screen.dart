@@ -38,7 +38,7 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawermain(context),
+      drawer: Drawer(child: DrawerClass()),
       appBar: Appbarmain(context),
       body: SingleChildScrollView(
         child: Column(

@@ -28,7 +28,7 @@ class _LogoutState extends State<Logout> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: Drawermain(context),
+      drawer: Drawer(child: DrawerClass()),
       appBar: Appbarmain(context),
       body: Column(
         children: [
