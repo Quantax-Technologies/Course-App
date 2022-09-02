@@ -15,6 +15,7 @@ class DrawerClass extends StatefulWidget {
 }
 
 var switchvalue = false;
+var switchtext = "Switch to Expert";
 
 class _DrawerClassState extends State<DrawerClass> {
   @override
