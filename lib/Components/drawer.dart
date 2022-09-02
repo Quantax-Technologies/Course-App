@@ -8,6 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Drawer Drawermain(context) {
+  var switchvalue = false;
   return Drawer(
     child: ListView(
       padding: EdgeInsets.zero,
@@ -44,6 +45,14 @@ Drawer Drawermain(context) {
                 .push(MaterialPageRoute(builder: (context) => Logout()));
           },
         ),
+        ListTile(
+          title: Switch(
+            value: switchvalue,
+            onChanged: (val) {
+              switchvalue = true;
+            },
+          ),
+        )
       ],
     ),
   );
