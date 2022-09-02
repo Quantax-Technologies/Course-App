@@ -23,13 +23,37 @@ class AddCourse extends StatefulWidget {
 
 class _AddCourseState extends State<AddCourse> {
   final _auth = FirebaseAuth.instance.currentUser!;
-
-  addcoursefunction(
-      titlecourse, urlcourse, durationcourse, descriptioncourse) async {
+  addcoursedetailfunction(
+      unique, titlecourse, courseurl, courseduration, descriptioncourse) async {
     if (titlecourse == '' ||
-        urlcourse == '' ||
-        durationcourse == '' ||
+        courseurl == '' ||
+        courseduration == '' ||
         descriptioncourse == '') {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('Fill The Field First')));
+    } else {
+      await FirebaseFirestore.instance.collection("Coursedetail").add({
+        'unique': unique,
+        'title': titlecourse,
+        'url': courseurl,
+        'duration': courseduration,
+        'description': descriptioncourse,
+      });
+      print("Details entered");
+      titlecontroller1.clear();
+      urlcontroller1.clear();
+      durationcontroller1.clear();
+      descriptioncontroller1.clear();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Course Detail Added'),
+        ),
+      );
+    }
+  }
+
+  addcoursefunction(titlecourse, courselevel, descriptioncourse) async {
+    if (titlecourse == '' || courselevel == '' || descriptioncourse == '') {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('Fill The fields'),
       ));
@@ -42,17 +66,18 @@ class _AddCourseState extends State<AddCourse> {
       Storage storageobj = Storage();
       var filename = results.files.single.name;
       var pathname = results.files.single.path;
-      var ranfolder = Random().nextInt(1000);
+      var ranfolder = Random().nextInt(10000);
+      var ranfolder1 = Random().nextInt(10000);
 
       var url = storageobj
           .uploadFile(pathname, '$ranfolder', filename)
           .then((value) async {
         await FirebaseFirestore.instance.collection("Courses").add({
           'userid': "${_auth.uid}",
+          'uniquerand': '${ranfolder + ranfolder1}',
           'useremail': "${_auth.email}",
           'coursetitle': "$titlecourse",
-          'courseurl': urlcourse,
-          'courseduration': durationcourse,
+          'courselevel': courselevel,
           'coursedescription': descriptioncourse,
           'coursebanner': "$value",
           'datecreation':
@@ -62,20 +87,152 @@ class _AddCourseState extends State<AddCourse> {
 
       titlecontroller.clear();
       urlcontroller.clear();
-      durationcontroller.clear();
       descriptioncontroller.clear();
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('Course Upload')));
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
+      showDialog<void>(
+          context: context,
+          barrierDismissible: false, // user must tap button!
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('AlertDialog Title'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: Text(
+                        "Title",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      controller: titlecontroller1,
+                      decoration: new InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor1)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 0, right: 5, left: 10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor2)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: Text(
+                        "Url",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      controller: urlcontroller1,
+                      decoration: new InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor1)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 0, right: 5, left: 10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor2)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: Text(
+                        "Duration",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      controller: durationcontroller1,
+                      decoration: new InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor1)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 0, right: 5, left: 10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor2)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+                      child: Text(
+                        "Description",
+                        style: TextStyle(
+                          fontWeight: FontWeight.w400,
+                        ),
+                      ),
+                    ),
+                    TextField(
+                      controller: descriptioncontroller1,
+                      decoration: new InputDecoration(
+                        focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor1)),
+                        contentPadding: EdgeInsets.only(
+                            top: 0, bottom: 0, right: 5, left: 10),
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(Radius.circular(4)),
+                            borderSide: BorderSide(color: basecolor2)),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('Done'),
+                  onPressed: () {
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => Home(),
+                      ),
+                    );
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text('Course Completely Added'),
+                    ));
+                  },
+                ),
+                TextButton(
+                  child: const Text('Add'),
+                  onPressed: () {
+                    addcoursedetailfunction(
+                        '${ranfolder + ranfolder1}',
+                        titlecontroller1.text,
+                        urlcontroller1.text,
+                        durationcontroller1.text,
+                        descriptioncontroller1.text);
+                  },
+                ),
+              ],
+            );
+          });
+      // Navigator.of(context)
+      //     .pushReplacement(MaterialPageRoute(builder: (context) => Home()));
     }
   }
 
   @override
   TextEditingController titlecontroller = TextEditingController();
   TextEditingController urlcontroller = TextEditingController();
-  TextEditingController durationcontroller = TextEditingController();
   TextEditingController descriptioncontroller = TextEditingController();
+  TextEditingController titlecontroller1 = TextEditingController();
+  TextEditingController urlcontroller1 = TextEditingController();
+  TextEditingController descriptioncontroller1 = TextEditingController();
+
+  TextEditingController durationcontroller1 = TextEditingController();
+
   var results;
 
   Widget build(BuildContext context) {
@@ -127,31 +284,6 @@ class _AddCourseState extends State<AddCourse> {
                 ),
                 TextField(
                   controller: urlcontroller,
-                  decoration: new InputDecoration(
-                    focusedBorder: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(color: basecolor1)),
-                    contentPadding:
-                        EdgeInsets.only(top: 0, bottom: 0, right: 5, left: 10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(4)),
-                        borderSide: BorderSide(color: basecolor2)),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-                  child: Text(
-                    "Duration",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                TextField(
-                  controller: durationcontroller,
-
-                  keyboardType: TextInputType.number,
-                  // controller: loginemail,
                   decoration: new InputDecoration(
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.all(Radius.circular(4)),
@@ -259,11 +391,8 @@ class _AddCourseState extends State<AddCourse> {
                           ),
                         ),
                         onPressed: () {
-                          addcoursefunction(
-                              titlecontroller.text,
-                              urlcontroller.text,
-                              durationcontroller.text,
-                              descriptioncontroller.text);
+                          addcoursefunction(titlecontroller.text,
+                              urlcontroller.text, descriptioncontroller.text);
                         },
                         child: Text("Add"))),
               ],
