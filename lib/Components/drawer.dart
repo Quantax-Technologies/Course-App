@@ -38,14 +38,16 @@ class _DrawerClassState extends State<DrawerClass> {
                   .push(MaterialPageRoute(builder: (context) => Home()));
             },
           ),
-          ListTile(
-            leading: Icon(Icons.bookmark),
-            title: Text('Add Course'),
-            onTap: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => AddCourse()));
-            },
-          ),
+          if (switchvalue) ...[
+            ListTile(
+              leading: Icon(Icons.bookmark),
+              title: Text('Add Course'),
+              onTap: () {
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => AddCourse()));
+              },
+            ),
+          ],
           ListTile(
             leading: Icon(Icons.person),
             title: Text('Profile'),
@@ -63,9 +65,18 @@ class _DrawerClassState extends State<DrawerClass> {
                 setState(() {
                   switchvalue = val;
                 });
+                if (switchvalue) {
+                  setState(() {
+                    switchtext = "Switch to Learner";
+                  });
+                } else {
+                  setState(() {
+                    switchtext = "Switch to Expert";
+                  });
+                }
               },
             ),
-            title: Text('Switching between Learner and Expert'),
+            title: Text(switchtext),
           )
         ],
       ),
