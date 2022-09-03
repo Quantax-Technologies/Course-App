@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:courseapp/Components/appbar.dart';
 import 'package:courseapp/Components/drawer.dart';
+import 'package:courseapp/Components/widgets.dart';
 import 'package:courseapp/Theme/color.dart';
 import 'package:courseapp/Theme/resources.dart';
+import 'package:courseapp/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -10,15 +13,13 @@ class Courses extends StatefulWidget {
   final coursedescription;
   final image;
   final title;
-  final courseduration;
-  final courseurl;
+  final courseunique;
   const Courses(
       {Key? key,
       @required this.image,
       @required this.title,
-      @required this.courseduration,
       @required this.coursedescription,
-      @required this.courseurl})
+      @required this.courseunique})
       : super(key: key);
 
   @override
@@ -137,12 +138,6 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                       "${widget.coursedescription}",
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 20.0),
-                    child: Text(
-                      "Course Url : ${widget.courseurl}",
-                    ),
-                  )
                 ],
               ),
             ),
@@ -163,8 +158,54 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
             SizedBox(
               height: 600,
               child: TabBarView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 children: [
+                  Container(
+                    height: 300,
+                    child: StreamBuilder<QuerySnapshot>(
+                        stream: FirebaseFirestore.instance
+                            .collection('Coursedetail')
+                            .where('unique',
+                                isEqualTo: '${widget.courseunique}')
+                            .snapshots(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<QuerySnapshot> snapshot) {
+                          if (snapshot.hasError) {
+                            return Text("Error");
+                          }
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: Text(""));
+                          }
+                          return ListView(
+                            children: snapshot.data!.docs
+                                .map((DocumentSnapshot document) {
+                              Map<String, dynamic> data =
+                                  document.data()! as Map<String, dynamic>;
+                              return ExpansionTile(
+                                  title: Text("${data['title']}"),
+                                  children: [
+                                    Text("${data['description']}"),
+                                    Padding(
+                                      padding: EdgeInsets.only(bottom: 20),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          bottom: 20, right: 20, left: 20),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text("Duration: ${data['duration']}"),
+                                          Text("Url: ${data['url']}"),
+                                        ],
+                                      ),
+                                    ),
+                                  ]);
+                            }).toList(),
+                          );
+                        }),
+                  ),
                   Container(
                       child: Column(
                     children: [
@@ -240,16 +281,6 @@ class _CoursesState extends State<Courses> with SingleTickerProviderStateMixin {
                       ]),
                     ],
                   )),
-                  Container(
-                    child: ExpansionTile(title: Text("Question 1"), children: [
-                      Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
-                      Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
-                      Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
-                      Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
-                      Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
-                      Text("lorem ipsum lorem ipsum lorem ipsum lorem ipsum "),
-                    ]),
-                  ),
                 ],
                 controller: _tabController,
               ),

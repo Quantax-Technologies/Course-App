@@ -117,11 +117,9 @@ class Home extends StatelessWidget {
                                   builder: (context) => Courses(
                                         image: '${data['coursebanner']}',
                                         title: '${data['coursetitle']}',
-                                        courseduration:
-                                            '${data['courseduration']}',
                                         coursedescription:
                                             '${data['coursedescription']}',
-                                        courseurl: '${data['courseurl']}',
+                                        courseunique: '${data['uniquerand']}',
                                       )));
                             },
                             child: cardcourse(context, "${data['coursetitle']}",
