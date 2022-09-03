@@ -96,6 +96,7 @@ class Home extends StatelessWidget {
                 child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('Courses')
+                        .orderBy('datecreation', descending: true)
                         .snapshots(),
                     builder: (BuildContext context,
                         AsyncSnapshot<QuerySnapshot> snapshot) {
